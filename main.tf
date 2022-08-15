@@ -22,30 +22,26 @@ module "lambda-submitDataset" {
   tags = var.common-tags
 
   environment_variables = {
-    DATASETS_TABLE = aws_dynamodb_table.datasets.name
-    SUMMARISE_DATASET_SNS_TOPIC_ARN = aws_sns_topic.summariseDataset.arn
-    BEACON_API_VERSION = local.api_version
-    BEACON_ID = var.beacon-id
   }
   
 }
 
-resource "aws_emrserverless_application" "example" {
+resource "aws_emrserverless_application" "emr-application" {
   name          = "example"
   release_label = "emr-6.6.0"
-  type          = "hive"
+  type          = "spark"
 
-  initial_capacity {
-    initial_capacity_type = "HiveDriver"
+  # initial_capacity {
+  #   initial_capacity_type = "SparkDriver"
 
-    initial_capacity_config {
-      worker_count = 1
-      worker_configuration {
-        cpu    = "2 vCPU"
-        memory = "10 GB"
-      }
-    }
-  }
+  #   initial_capacity_config {
+  #     worker_count = 1
+  #     worker_configuration {
+  #       cpu    = "2 vCPU"
+  #       memory = "10 GB"
+  #     }
+  #   }
+  # }
 
   maximum_capacity {
     cpu    = "2 vCPU"
