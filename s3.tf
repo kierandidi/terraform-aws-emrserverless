@@ -1,7 +1,10 @@
 # S3 bucket for script storage
-#
-resource "aws_s3_bucket" "script-bucket" {
-  bucket_prefix = emr-script-bucket
-  force_destroy = true
-  #tags = var.common-tags
+resource "aws_s3_bucket" "emr-serverless-bucket" {
+
+    bucket = var.bucket_name
+    force_destroy = true
+    
+    tags = {
+        Name = var.bucket_name
+    }
 }

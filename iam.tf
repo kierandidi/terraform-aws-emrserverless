@@ -1,32 +1,61 @@
-# submitDataset Lambda Function
-#
-data aws_iam_policy_document lambda-submitDataset {
-  statement {
-    actions = [
-      "dynamodb:DescribeTable",
-      "dynamodb:PutItem",
-      "dynamodb:UpdateItem",
-      "dynamodb:GetItem",
-    ]
-    resources = [
-      aws_dynamodb_table.datasets.arn,
-    ]
-  }
+resource "aws_iam_role" "emr-serverless-role" {
+  
+    name = "emr-serverless-role"
+    permissions_boundary = "arn:aws:iam::${data.aws_caller_identity.current.account_id}:policy/telesys/tt-base-permission-boundary"
+    tags = {
+        Name = "emr-serverless-role"
+    }
 
-  statement {
-    actions = [
-      "SNS:Publish",
-    ]
-    resources = [
-      aws_sns_topic.summariseDataset.arn,
-    ]
-  }
+    assume_role_policy = jsonencode(
+        {
+            Version =  "2012-10-17",
+            Statement = [
+                {
+                    Action = "sts:AssumeRole"
+                    Principal = {
+                        Service = "emr-serverless.amazonaws.com"
+                    }
+                    Effect = "Allow"
+                }
+            ]
+        }
+    )
+}
 
-  statement {
-    actions = [
-      "s3:GetObject",
-      "s3:ListBucket",
-    ]
-    resources = ["*"]
-  }
+ output "execution_role_arn" {
+        value = aws_iam_role.emr-serverless-role.arn
+}
+
+resource "aws_iam_role_policy" "emr-serverless-role" {
+
+    name = "emr-serverless-policy"
+    role = aws_iam_role.emr-serverless-role.id
+
+    policy = jsonencode({
+        Version = "2012-10-17"
+        Statement = [
+            {
+            
+                Effect = "Allow"
+                Action = [
+                    "s3:GetObject",
+                    "s3:ListBucket"
+                ],
+                Resource = [
+                    "arn:aws:s3:::*.elasticmapreduce",
+                    "arn:aws:s3:::*.elasticmapreduce/*"
+                ]
+            },
+           {
+                Effect = "Allow"
+                Action = [
+                    "s3:*"
+                ]
+                Resource = [
+                    aws_s3_bucket.emr-serverless-bucket.arn,
+                     "${aws_s3_bucket.emr-serverless-bucket.arn}/*"
+                ]
+           }
+        ]
+    })
 }

@@ -1,51 +1,39 @@
-#Provisioning infrastructure for an AWS EMR Serverless application as described here:
-#https://docs.aws.amazon.com/emr/latest/EMR-Serverless-UserGuide/getting-started.html
+resource "aws_emrserverless_application" "emr_application" {
+    name = var.application_name
+    release_label = "emr-6.6.0"
+    type = "spark"
 
+    maximum_capacity {
+        cpu = var.application_max_cores
+        memory = var.application_max_memory
+    }
 
-#
+    initial_capacity {
+        initial_capacity_type = "Driver"
+        # no initial capacity provided, WARNING: if you provide initial capacity it will cost you even when you are not running a job
+        # initial_capacity_config {
+        #     worker_count = 1
 
+        #     worker_configuration {
+        #         cpu = "2 vCPU"
+        #         memory = "10 GB"
+        #     }
+        # }
+    }
 
-module "lambda-submitDataset" {
-  source = "terraform-aws-modules/lambda/aws"
+    auto_start_configuration {
+        # defaults
+        enabled = "true"
+    }
 
-  function_name = "submitDataset"
-  description = "Creates or updates a dataset and triggers INSIDER pipeline."
-  handler = "lambda_function.lambda_handler"
-  runtime = "python3.9"
-  architectures = ["x86_64"]
-  memory_size = 128
-  timeout = 60
-  attach_policy_json = true
-  policy_json = data.aws_iam_policy_document.lambda-submitDataset.json
-  source_path = "${path.module}/lambda/submitDataset"
+    auto_stop_configuration {
+        # defaults
+        enabled = "true"
+        idle_timeout_minutes = 15
+    }
 
-  tags = var.common-tags
-
-  environment_variables = {
-  }
-  
-}
-
-resource "aws_emrserverless_application" "emr-application" {
-  name          = "example"
-  release_label = "emr-6.6.0"
-  type          = "spark"
-
-  # initial_capacity {
-  #   initial_capacity_type = "SparkDriver"
-
-  #   initial_capacity_config {
-  #     worker_count = 1
-  #     worker_configuration {
-  #       cpu    = "2 vCPU"
-  #       memory = "10 GB"
-  #     }
-  #   }
-  # }
-
-  maximum_capacity {
-    cpu    = "2 vCPU"
-    memory = "10 GB"
-  }
+    tags = {
+        Name = var.application_name
+    }
 }
 
