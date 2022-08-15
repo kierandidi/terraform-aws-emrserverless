@@ -1,9 +1,8 @@
-resource "aws_iam_role" "emr-serverless-role" {
+resource "aws_iam_role" "EMRServerlessS3RuntimeRole" {
   
-    name = "emr-serverless-role"
-    permissions_boundary = "arn:aws:iam::${data.aws_caller_identity.current.account_id}:policy/telesys/tt-base-permission-boundary"
+    name = "EMRServerlessS3RuntimeRole"
     tags = {
-        Name = "emr-serverless-role"
+        Name = "EMRServerlessS3RuntimeRole"
     }
 
     assume_role_policy = jsonencode(
@@ -22,11 +21,7 @@ resource "aws_iam_role" "emr-serverless-role" {
     )
 }
 
- output "execution_role_arn" {
-        value = aws_iam_role.emr-serverless-role.arn
-}
-
-resource "aws_iam_role_policy" "emr-serverless-role" {
+resource "aws_iam_role_policy" "EMRServerlessS3AccessPolicy" {
 
     name = "emr-serverless-policy"
     role = aws_iam_role.emr-serverless-role.id
