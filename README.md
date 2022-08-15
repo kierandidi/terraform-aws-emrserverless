@@ -5,8 +5,8 @@ Terraform module which creates EMR Serverless application and all resources, rol
 ## Usage
 
 ```hcl
-module "vpc" {
-  source = "terraform-aws-modules/emrserverless"
+module "emrserverless" {
+  source = "github.com/kierandidi/terraform-aws-emrserverless"
 
   application_name = "application-emr-serverless"
   bucket_name = "bucket-emr-serverless"
