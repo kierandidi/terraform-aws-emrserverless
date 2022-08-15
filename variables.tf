@@ -18,3 +18,18 @@ variable "application_max_cores" {
   description = "The maximum CPU cores for the entire application."
   default     = "1 vCPU"
 }
+
+variable "initial_woker_count" {
+  type        = number
+  default     = null
+}
+
+variable "initial_woker_cpu" {
+  type        = string
+  default     = "2 vCPU"
+}
+
+variable "initial_woker_memory" {
+  type        = string
+  default     = "10 GB"
+}

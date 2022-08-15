@@ -10,15 +10,23 @@ resource "aws_emrserverless_application" "emr_application" {
 
   initial_capacity {
     initial_capacity_type = "Driver"
-    # no initial capacity provided, WARNING: if you provide initial capacity it will cost you even when you are not running a job
-    # initial_capacity_config {
-    #     worker_count = 1
+    
+    dynamic "initial_capacity_config" { 
+      for_each = var.initial_woker_count == null ? [] : [1]
 
-    #     worker_configuration {
-    #         cpu = "2 vCPU"
-    #         memory = "10 GB"
-    #     }
-    # }
+      content {
+        worker_count = var.initial_woker_count
+
+        dynamic "worker_configuration" {
+          for_each = [1]
+
+          content {
+            cpu = var.initial_woker_cpu
+            memory = var.initial_woker_memory
+          } 
+        }
+      }
+    }
   }
 
   auto_start_configuration {
