@@ -19,17 +19,26 @@ variable "application_max_cores" {
   default     = "1 vCPU"
 }
 
-variable "initial_woker_count" {
+variable "initial_worker_count" {
   type        = number
   default     = null
+  description = "Number of initial workers, directly available at job submission"
 }
 
-variable "initial_woker_cpu" {
+variable "initial_worker_cpu" {
   type        = string
   default     = "2 vCPU"
+  description = "Amount of initial worker memory, directly available at job submission"
 }
 
-variable "initial_woker_memory" {
+variable "initial_worker_memory" {
   type        = string
   default     = "10 GB"
+  description = "Amount of initial worker memory, directly available at job submission"
+}
+
+variable "scripts" {
+  type = list(string)
+  default = null
+  description = "Script files to be zipped and uploaded to EMR bucket"
 }

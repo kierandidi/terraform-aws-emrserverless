@@ -13,8 +13,8 @@ module "emrserverless" {
   application_max_memory  = "4 GB"
   application_max_cores   = "1 vCPU"
   
-  # optional initial configurations
-  initial_woker_count     = 1
+  # optional initial configurations 
+  initial_woker_count     = 0
   initial_woker_cpu       = "2 vCPU"
   initial_woker_memory    = "10 GB"
 }

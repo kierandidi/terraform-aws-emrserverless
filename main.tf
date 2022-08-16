@@ -15,14 +15,14 @@ resource "aws_emrserverless_application" "emr_application" {
       for_each = var.initial_woker_count == null ? [] : [1]
 
       content {
-        worker_count = var.initial_woker_count
+        worker_count = var.initial_worker_count
 
         dynamic "worker_configuration" {
           for_each = [1]
 
           content {
-            cpu = var.initial_woker_cpu
-            memory = var.initial_woker_memory
+            cpu = var.initial_worker_cpu
+            memory = var.initial_worker_memory
           } 
         }
       }
