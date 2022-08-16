@@ -10,8 +10,8 @@ resource "aws_emrserverless_application" "emr_application" {
 
   initial_capacity {
     initial_capacity_type = "Driver"
-    
-    dynamic "initial_capacity_config" { 
+
+    dynamic "initial_capacity_config" {
       for_each = var.initial_woker_count == null ? [] : [1]
 
       content {
@@ -21,9 +21,9 @@ resource "aws_emrserverless_application" "emr_application" {
           for_each = [1]
 
           content {
-            cpu = var.initial_worker_cpu
+            cpu    = var.initial_worker_cpu
             memory = var.initial_worker_memory
-          } 
+          }
         }
       }
     }

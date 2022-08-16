@@ -38,7 +38,19 @@ variable "initial_worker_memory" {
 }
 
 variable "scripts" {
-  type = list(string)
-  default = null
-  description = "Script files to be zipped and uploaded to EMR bucket"
+  type        = list(string)
+  default     = null
+  description = "Script files to be zipped and uploaded to S3 bucket"
+}
+
+variable "scripts_name_in_bucket" {
+  type        = string
+  default     = null
+  description = "Name of compressed zip directory in S3 bucket (e.g. scripts.zip)"
+}
+
+variable "job_file" {
+  type        = string
+  default     = null
+  description = "File that will be submitted as job to EMR Serverless application, e.g. job.py"
 }
