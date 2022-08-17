@@ -19,7 +19,7 @@ resource "aws_s3_object" "scripts_upload" {
 }
 
 resource "aws_s3_object" "env_conda_upload" {
-  count = var.use_conda == null ? 0 : 1
+  count = var.use_conda ? 0 : 1
   #provisioner "local-exec" {
   #  command = conda cmd
   #}
