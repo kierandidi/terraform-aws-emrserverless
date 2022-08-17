@@ -9,7 +9,7 @@ locals {
 resource "aws_s3_object" "scripts_upload" {
   count = var.scripts == null ? 0 : 1
   provisioner "local-exec" {
-    command = "zip -r ${var.scripts}.zip ${local.scripts_source}"
+    command = "zip -r ${var.scripts}.zip ${var.scripts}"
   }
 
   bucket = var.bucket_name
