@@ -14,8 +14,8 @@ resource "aws_s3_object" "scripts_upload" {
 
   bucket = var.bucket_name
   key    = var.scripts
-  source = "${local.scripts_source}.zip"
-  etag   = filemd5(local.scripts_source)
+  source = "${var.scripts}.zip"
+  etag   = filemd5(var.scripts)
 }
 
 resource "aws_s3_object" "env_conda_upload" {
