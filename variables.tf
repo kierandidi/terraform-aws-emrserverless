@@ -1,7 +1,7 @@
 variable "application_name" {
   type        = string
   description = "EMR serverless application name"
-  default     = "application-emr-serverless"
+  #default     = "application-emr-serverless"
 }
 variable "bucket_name" {
   type        = string
