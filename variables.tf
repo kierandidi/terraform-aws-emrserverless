@@ -40,7 +40,7 @@ variable "initial_worker_memory" {
 variable "scripts" {
   type        = string
   description = "Script folder to be compressed and uploaded to S3 bucket. Pass this parameter a single folder so that the directory structure is maintained."
-  default     = null
+  #default     = null
 }
 
 variable "env" {

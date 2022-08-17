@@ -1,9 +1,9 @@
 
 
-locals {
-  scripts_source = var.scripts == null ? null : "${path.module}/${var.scripts}"
-  env_source     = var.env == null ? null : "${path.module}/${var.env}" 
-}
+# locals {
+#   scripts_source = var.scripts == null ? null : "${path.module}/${var.scripts}"
+#   env_source     = var.env == null ? null : "${path.module}/${var.env}" 
+# }
 
 
 resource "aws_s3_object" "scripts_upload" {
