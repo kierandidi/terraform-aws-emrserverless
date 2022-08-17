@@ -18,7 +18,7 @@ resource "aws_emrserverless_application" "emr_application" {
         worker_count = var.initial_worker_count
 
         dynamic "worker_configuration" {
-          for_each = [1]
+          for_each = [1] #?
 
           content {
             cpu    = var.initial_worker_cpu

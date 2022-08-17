@@ -38,19 +38,25 @@ variable "initial_worker_memory" {
 }
 
 variable "scripts" {
-  type        = list(string)
-  default     = null
-  description = "Script files to be zipped and uploaded to S3 bucket"
-}
-
-variable "scripts_name_in_bucket" {
   type        = string
   default     = null
-  description = "Name of compressed zip directory in S3 bucket (e.g. scripts.zip)"
+  description = "Script folder to be compressed and uploaded to S3 bucket. Pass this parameter a single folder so that the directory structure is maintained."
 }
 
-variable "job_file" {
+variable "env" {
   type        = string
   default     = null
-  description = "File that will be submitted as job to EMR Serverless application, e.g. job.py"
+  description = "Environment to be compressed and uploaded to S3 bucket (either conda or venv)"
+}
+
+variable "use_conda" {
+  type        = bool
+  default     = false
+  description = "Indicate whether conda should be used for environment packaging"
+}
+
+variable "use_pip" {
+  type        = bool
+  default     = false
+  description = "Indicate whether pip should be used for environment packaging"
 }
