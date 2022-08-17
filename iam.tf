@@ -1,8 +1,8 @@
 resource "aws_iam_role" "EMRServerlessS3RuntimeRole" {
 
-  name = "${var.application-name}-role"
+  name = "${var.application_name}-role"
   tags = {
-    Name = "${var.application-name}-role"
+    Name = "${var.application_name}-role"
   }
 
   assume_role_policy = jsonencode(
