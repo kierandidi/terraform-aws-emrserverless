@@ -33,30 +33,30 @@ variable "initial_worker_cpu" {
 
 variable "initial_worker_memory" {
   type        = string
-  default     = "10 GB"
   description = "Amount of initial worker memory, directly available at job submission"
+  default     = "10 GB"
 }
 
 variable "scripts" {
   type        = string
-  default     = null
   description = "Script folder to be compressed and uploaded to S3 bucket. Pass this parameter a single folder so that the directory structure is maintained."
+  default     = null
 }
 
 variable "env" {
   type        = string
-  default     = null
   description = "Environment to be compressed and uploaded to S3 bucket (either conda or venv)"
+  default     = null
 }
 
 variable "use_conda" {
   type        = bool
-  default     = false
   description = "Indicate whether conda should be used for environment packaging"
+  default     = false
 }
 
 variable "use_pip" {
   type        = bool
-  default     = false
   description = "Indicate whether pip should be used for environment packaging"
+  default     = false
 }
