@@ -1,6 +1,6 @@
 resource "aws_iam_role" "EMRServerlessS3RuntimeRole" {
-
   name = "${var.application_name}-role"
+
   tags = {
     Name = "${var.application_name}-role"
   }
@@ -22,8 +22,7 @@ resource "aws_iam_role" "EMRServerlessS3RuntimeRole" {
 }
 
 resource "aws_iam_role_policy" "EMRServerlessS3AccessPolicy" {
-
-  name = "emr-serverless-policy"
+  name = "${var.application_name}-policy"
   role = aws_iam_role.EMRServerlessS3RuntimeRole.id
 
   policy = jsonencode({
