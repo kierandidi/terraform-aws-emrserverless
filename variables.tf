@@ -76,6 +76,6 @@ variable "artifacts_dir" {
 
 variable "env" {
   type        = string
-  description = "Compressed environment to be uploaded to S3 bucket (either conda or venv). Should be in same folder as terraform module."
+  description = "Compressed environment to be uploaded to S3 bucket (either conda or venv)."
   default     = null
 }
