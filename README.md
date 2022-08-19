@@ -29,6 +29,7 @@ module "emrserverless" {
 
 Usage notes
 * Leave the `initial_*` configs empty to avoid idle time costs.
+* Before uploading environment, compress it with [conda-pack](https://conda.github.io/conda-pack/) for conda environments and [venv-pack](https://docs.aws.amazon.com/emr/latest/EMR-Serverless-UserGuide/using-python-libraries.html) for venv environments.
 
 ### Application Inputs
 
@@ -57,9 +58,8 @@ Input the following variables to setup the EMR-Serverless application on AWS.
 | Name | Description | Type | Default | Required |
 |------|-------------|------|---------|----------|
 | <a name="artifacts_dir"></a>[artifacts_dir](#) | Directory name where artifacts should be stored. | `string` |  `builds` | no |
-| <a name="env"></a>[env](#) | Environment to be compressed and uploaded to S3 bucket (either conda or venv). | `string` |  N/A | no |
-| <a name="use_conda"></a>[use_conda](#) | Indicate whether conda should be used for environment packaging. | `string` |  N/A | no |
-| <a name="use_pip"></a>[use_pip](#) | Indicate whether pip should be used for environment packaging. | `string` |  N/A | no |
+| <a name="env"></a>[env](#) | Compressed environment to be uploaded to S3 bucket (either conda or venv). | `string` |  N/A | no |
+
 
 ## Outputs
 
@@ -70,3 +70,6 @@ Input the following variables to setup the EMR-Serverless application on AWS.
 | <a name="execution_role_arn"></a>[execution_role_arn](#) | Execution role ARN of the EMR Serverless Application |
 | <a name="bucket_name"></a>[bucket_name](#) | Scripts bucket |
 
+## Authors
+
+Module managed by [Kieran Didi](https://github.com/kierandidi/) and [Anuradha](https://github.com/anuradhawick). Check out [serverless.tf](https://serverless.tf) to learn more about doing serverless with Terraform.

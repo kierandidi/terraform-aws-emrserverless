@@ -12,3 +12,13 @@ resource "aws_s3_object" "emrserverless_package" {
 
   depends_on    = [null_resource.archive, aws_s3_bucket.emr-serverless-bucket]
 }
+
+resource "aws_s3_object" "emrserverless_environment" {
+  count = var.env == null ? 0 : 1
+
+  bucket        = var.bucket_name
+  key           = var.env
+  source        = 
+
+  depends_on    = [null_resource.archive, aws_s3_bucket.emr-serverless-bucket]
+}
