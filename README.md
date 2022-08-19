@@ -8,10 +8,15 @@ Terraform module which creates EMR Serverless application and all resources, rol
 module "emrserverless" {
   source = "github.com/kierandidi/terraform-aws-emrserverless"
 
+  # application configuration
   application_name        = "application-emr-serverless"
-  bucket_name             = "bucket-emr-serverless"
   application_max_memory  = "4 GB"
   application_max_cores   = "1 vCPU"
+
+  # scripts configuration
+  bucket_name             = "bucket-emr-serverless"
+  bucket_acl              = "bucket-emr-serverless"
+  scripts                 = "./my-program"
   
   # optional initial configurations 
   initial_woker_count     = 0
@@ -20,11 +25,48 @@ module "emrserverless" {
 }
 ```
 
+## Inputs
+
+Usage notes
+* Leave the `initial_*` configs empty to avoid idle time costs.
+
+### Application Inputs
+
+Input the following variables to setup the EMR-Serverless application on AWS.
+
+| Name | Description | Type | Default | Required |
+|------|-------------|------|---------|----------|
+| <a name="application_name"></a>[application_name](#) | EMR serverless application name. | `string` |  `N/A` | yes |
+| <a name="application_max_memory"></a>[application_max_memory](#) | The maximum memory available for the entire application. | `string` |  `4 GB` | no |
+| <a name="application_max_cores"></a>[application_max_cores](#) | The maximum CPU cores for the entire application. | `string` |  `1 vCPU` | no |
+| <a name="initial_worker_count"></a>[initial_worker_count](#) | Number of initial workers, directly available at job submission. | `number` |  `null` | no |
+| <a name="initial_worker_cpu"></a>[initial_worker_cpu](#) | Amount of initial worker memory, directly available at job submission. | `string` |  `2 vCPU` | no |
+| <a name="initial_worker_memory"></a>[initial_worker_memory](#) | Amount of initial worker memory, directly available at job submission. | `string` |  `10 GB` | no |
+
+### Storage Inputs for User Scripts
+
+| Name | Description | Type | Default | Required |
+|------|-------------|------|---------|----------|
+| <a name="bucket_name"></a>[bucket_name](#) | The bucket in which scripts for the application will be stored. | `string` |  `emr-serverless-bucket` | no |
+| <a name="bucket_acl"></a>[bucket_acl](#) | The canned ACL to apply. Valid values are private, public-read, public-read-write, aws-exec-read, authenticated-read, bucket-owner-read, and bucket-owner-full-control. Defaults to private. | `string` |  `private` | no |
+| <a name="bucket_tags"></a>[bucket_tags](#) | S3 bucket tags. | `map` |  `{}` | no |
+| <a name="scripts"></a>[scripts](#) | Script folder to be compressed and uploaded to S3 bucket. | `string` |  `N/A` | yes |
+
+### Inputs for User Scripts Packaging
+
+| Name | Description | Type | Default | Required |
+|------|-------------|------|---------|----------|
+| <a name="artifacts_dir"></a>[artifacts_dir](#) | Directory name where artifacts should be stored. | `string` |  `builds` | no |
+| <a name="env"></a>[env](#) | Environment to be compressed and uploaded to S3 bucket (either conda or venv). | `string` |  N/A | no |
+| <a name="use_conda"></a>[use_conda](#) | Indicate whether conda should be used for environment packaging. | `string` |  N/A | no |
+| <a name="use_pip"></a>[use_pip](#) | Indicate whether pip should be used for environment packaging. | `string` |  N/A | no |
+
 ## Outputs
 
 | Name | Description |
 |------|-------------|
-| <a name="application_id"></a>[application_id](application_id) | ID of the EMR Serverless Application |
-| <a name="application_name"></a>[application_name](application_name) | Name of the EMR Serverless Application |
-| <a name="execution_role_arn"></a>[execution_role_arn](execution_role_arn) | Execution role ARN of the EMR Serverless Application |
+| <a name="application_id"></a>[application_id](#) | ID of the EMR Serverless Application |
+| <a name="application_name"></a>[application_name](#) | Name of the EMR Serverless Application |
+| <a name="execution_role_arn"></a>[execution_role_arn](#) | Execution role ARN of the EMR Serverless Application |
+| <a name="bucket_name"></a>[bucket_name](#) | Scripts bucket |
 

@@ -1,41 +1,14 @@
 locals {
-  scripts_source = var.scripts == null ? null : "${path.module}/${var.scripts}"
-  env_source     = var.env == null ? null : "${path.module}/${var.env}"
+  archive_filename        = try(data.external.archive_prepare[0].result.filename, null)
+  archive_filename_string = local.archive_filename != null ? local.archive_filename : ""
 }
 
-
-resource "aws_s3_object" "scripts_upload" {
+resource "aws_s3_object" "emrserverless_package" {
   count = var.scripts == null ? 0 : 1
-  provisioner "local-exec" {
-    command = "zip -r ${var.scripts}.zip ${var.scripts}"
-  }
 
-  bucket = var.bucket_name
-  key    = var.scripts
-  source = "${var.scripts}.zip"
-  #etag   = filemd5(var.scripts)
-}
+  bucket        = var.bucket_name
+  key           = replace(local.archive_filename_string, "/^\\.//", "")
+  source        = data.external.archive_prepare[0].result.filename
 
-resource "aws_s3_object" "env_conda_upload" {
-  count = var.use_conda ? 1 : 0
-  #provisioner "local-exec" {
-  #  command = conda cmd
-  #}
-
-  bucket = var.bucket_name
-  key    = var.env
-  source = local.env_source
-  #etag   = filemd5(local.env_source)
-}
-
-resource "aws_s3_object" "env_pip_upload" {
-  count = var.use_pip ? 1 : 0
-  #provisioner "local-exec" {
-  #  command = pip cmd
-  #}
-
-  bucket = var.bucket_name
-  key    = var.env
-  source = local.env_source
-  #etag   = filemd5(local.env_source)
+  depends_on    = [null_resource.archive, aws_s3_bucket.emr-serverless-bucket]
 }
