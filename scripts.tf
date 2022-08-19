@@ -18,7 +18,7 @@ resource "aws_s3_object" "emrserverless_environment" {
 
   bucket        = var.bucket_name
   key           = var.env
-  source        = 
+  source        = "${path.module}/${var.env}" 
 
-  depends_on    = [null_resource.archive, aws_s3_bucket.emr-serverless-bucket]
+  depends_on    = [aws_s3_bucket.emr-serverless-bucket]
 }

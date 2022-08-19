@@ -29,7 +29,7 @@ module "emrserverless" {
 
 Usage notes
 * Leave the `initial_*` configs empty to avoid idle time costs.
-* Before uploading environment, compress it with [conda-pack](https://conda.github.io/conda-pack/) for conda environments and [venv-pack](https://docs.aws.amazon.com/emr/latest/EMR-Serverless-UserGuide/using-python-libraries.html) for venv environments.
+* Before uploading environment, compress it with [conda-pack](https://conda.github.io/conda-pack/) for conda environments and [venv-pack](https://docs.aws.amazon.com/emr/latest/EMR-Serverless-UserGuide/using-python-libraries.html) for venv environments. The compressed environemnt should be in same folder as the terraform file. 
 
 ### Application Inputs
 
