@@ -72,4 +72,4 @@ Input the following variables to setup the EMR-Serverless application on AWS.
 
 ## Authors
 
-Module managed by [Kieran Didi](https://github.com/kierandidi/) and [Anuradha](https://github.com/anuradhawick). Check out [serverless.tf](https://serverless.tf) to learn more about doing serverless with Terraform.
+Module managed by [Kieran Didi](https://github.com/kierandidi/) and [Anuradha Wickramarachchi](https://github.com/anuradhawick). Check out [serverless.tf](https://serverless.tf) to learn more about doing serverless with Terraform.
