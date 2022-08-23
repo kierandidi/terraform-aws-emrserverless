@@ -27,6 +27,6 @@ output "bucket_name" {
 }
 
 output "scripts_path" {
-  value = "${var.artifacts_dir}/${data.external.archive_prepare[0].result.filename}"
+  value = data.external.archive_prepare[0].result.filename
   description = "Path to the compressed zip file in the S3 bucket"
 }
