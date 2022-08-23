@@ -25,3 +25,8 @@ output "bucket_name" {
   value       = aws_s3_bucket.emr-serverless-bucket.bucket
   description = "Scripts bucket"
 }
+
+output "scripts_path" {
+  value = "${var.artifacts_dir}/${data.external.archive_prepare[0].result.build_plan_filename}"
+  description = "Path to the compressed zip file in the S3 bucket"
+}
