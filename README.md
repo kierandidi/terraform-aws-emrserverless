@@ -6,8 +6,9 @@ Terraform module which creates EMR Serverless application and all resources, rol
 
 ```hcl
 module "emrserverless" {
-  source = "github.com/kierandidi/terraform-aws-emrserverless"
-
+  source  = "kierandidi/emrserverless/aws"
+  version = "1.0.0"
+  
   # application configuration
   application_name        = "application-emr-serverless"
   application_max_memory  = "4 GB"
